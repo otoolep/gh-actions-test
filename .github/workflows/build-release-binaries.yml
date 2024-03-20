@@ -21,7 +21,7 @@ jobs:
       - name: Display the version of go that we have installed
         run: go version
 
-      - name: Update apt rep
+      - name: Update apt repo
         run: sudo apt-get update
 
       - name: Install compilers
