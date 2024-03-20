@@ -22,17 +22,17 @@ jobs:
         run: go version
 
       - name: Install all the compilers
-        run: sudo apt-get update
-        run: sudo apt-get install gcc
-        run: sudo apt-get install musl-dev musl-tools
-        run: sudo apt-get install gcc-arm-linux-gnueabi
-        run: sudo apt-get install gcc-aarch64-linux-gnu
-        run: sudo apt-get install gcc-riscv64-linux-gnu
-        run: sudo apt-get install gcc-powerpc64le-linux-gnu
-        run: sudo apt-get install gcc-mips-linux-gnu
-        run: sudo apt-get install gcc-mipsel-linux-gnu
-        run: sudo apt-get install gcc-mips64-linux-gnuabi64
-        run: sudo apt-get install gcc-mips64el-linux-gnuabi64
+      - run: sudo apt-get update
+      - run: sudo apt-get install gcc
+      - run: sudo apt-get install musl-dev musl-tools
+      - run: sudo apt-get install gcc-arm-linux-gnueabi
+      - run: sudo apt-get install gcc-aarch64-linux-gnu
+      - run: sudo apt-get install gcc-riscv64-linux-gnu
+      - run: sudo apt-get install gcc-powerpc64le-linux-gnu
+      - run: sudo apt-get install gcc-mips-linux-gnu
+      - run: sudo apt-get install gcc-mipsel-linux-gnu
+      - run: sudo apt-get install gcc-mips64-linux-gnuabi64
+      - run: sudo apt-get install gcc-mips64el-linux-gnuabi64
 
       - name: Display the release tag
         run: echo ${{ github.event.release.tag_name }}
