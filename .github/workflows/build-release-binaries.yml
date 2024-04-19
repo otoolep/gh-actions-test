@@ -45,10 +45,8 @@ jobs:
             curl \
               -X POST \
               -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-              -H "Content-Type: $(file -b --mime-type $tarball)" \
+              -H "Content-type: application/octet-stream" \
               --data-binary @$tarball \
-              "${{ github.event.release.upload_url }}=$(basename $tarball)&label=$(basename $tarball)"
-
-              github.event.release.id
+              "${{ github.event.release.upload_url }}=$tarball"
           done
 
