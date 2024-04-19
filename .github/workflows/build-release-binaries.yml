@@ -47,6 +47,6 @@ jobs:
               -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
               -H "Content-type: application/octet-stream" \
               --data-binary @$tarball \
-              "${{ github.event.release.upload_url }}=$tarball"
+              "https://uploads.github.com/repos/otoolep/gh-actions-test/releases/${{ github.event.release.id }}/assets?name=$tarball"
           done
 
