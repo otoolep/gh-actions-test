@@ -44,9 +44,11 @@ jobs:
           for tarball in *.tar.gz; do
             curl \
               -X POST \
-              -H "Authorization: token ${{ secrets.ASSET_UPLOAD_TOKEN }}" \
+              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
               -H "Content-Type: $(file -b --mime-type $tarball)" \
               --data-binary @$tarball \
-              "${{ github.event.release.upload_url }}?name=$(basename $tarball)&label=$(basename $tarball)"
+              "${{ github.event.release.upload_url }}$(basename $tarball)&label=$(basename $tarball)"
+
+              github.event.release.id
           done
 
