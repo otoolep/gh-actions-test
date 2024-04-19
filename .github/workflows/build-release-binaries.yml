@@ -31,4 +31,4 @@ jobs:
         run: echo ${{ github.event.release.tag_name }}
 
       - name: Build the release binaries
-        run: build.sh ${{ github.event.release.tag_name }}
+        run: ./build.sh ${{ github.event.release.tag_name }}
