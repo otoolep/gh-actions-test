@@ -46,14 +46,6 @@ LDFLAGS="$STATIC $STRIP_SYMBOLS -X $LINKER_PKG_PATH.Version=$VERSION -X $LINKER_
 declare -A archs
 archs=(
   ["amd64"]="gcc musl-gcc"
-  ["arm64"]="aarch64-linux-gnu-gcc"
-  ["arm"]="arm-linux-gnueabi-gcc"
-  ["riscv64"]="riscv64-linux-gnu-gcc"
-  ["mips"]="mips-linux-gnu-gcc"
-  ["mipsle"]="mipsel-linux-gnu-gcc"
-  ["mips64"]="mips64-linux-gnuabi64-gcc"
-  ["mips64le"]="mips64el-linux-gnuabi64-gcc"
-  ["ppc64le"]="powerpc64le-linux-gnu-gcc"
 )
 
 for arch in "${!archs[@]}"; do
