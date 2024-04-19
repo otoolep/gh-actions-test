@@ -47,7 +47,7 @@ jobs:
               -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
               -H "Content-Type: $(file -b --mime-type $tarball)" \
               --data-binary @$tarball \
-              "${{ github.event.release.upload_url }}$(basename $tarball)&label=$(basename $tarball)"
+              "${{ github.event.release.upload_url }}=$(basename $tarball)&label=$(basename $tarball)"
 
               github.event.release.id
           done
