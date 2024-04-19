@@ -72,9 +72,9 @@ for arch in "${!archs[@]}"; do
 
     mkdir -p $release
     if [ "$arch" == "amd64" ]; then
-      copy_binaries $release $GOPATH/bin
+      copy_binaries $release /home/runner/go/bin
     else
-      copy_binaries $release $GOPATH/bin/linux_$arch
+      copy_binaries $release /home/runner/go/bin/linux_$arch
     fi
 
     tarball=${release}.tar.gz
