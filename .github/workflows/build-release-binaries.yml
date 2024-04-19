@@ -32,3 +32,6 @@ jobs:
 
       - name: Build the release binaries
         run: ./build.sh ${{ github.event.release.tag_name }}
+
+      - name: List the tarballs
+        run: ls -l *.tar.gz
