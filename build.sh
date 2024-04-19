@@ -11,6 +11,14 @@ function is_semver() {
   fi
 }
 
+# copy_binaries <dst_path> <src_dir>
+copy_binaries () {
+	#cp $2/rqlited $1
+	#cp $2/rqlite $1
+	#cp $2/rqbench $1
+    cp $2/gh-actions-test $1
+}
+
 # Read command line arguments
 VERSION=$1
 if ! is_semver "$VERSION"; then
@@ -35,16 +43,47 @@ STATIC="-extldflags=-static"
 LINKER_PKG_PATH=github.com/otoolep/gh-actions-test
 LDFLAGS="$STATIC $STRIP_SYMBOLS -X $LINKER_PKG_PATH.Version=$VERSION -X $LINKER_PKG_PATH.Branch=$branch -X $LINKER_PKG_PATH.Commit=$commit -X $LINKER_PKG_PATH.Buildtime=$buildtime"
 
-declare -A compilers
-compilers=(
-  ["amd64"]="gcc"
+declare -A archs
+archs=(
+  ["amd64"]="gcc musl-gcc"
+  ["arm64"]="aarch64-linux-gnu-gcc"
+  ["arm"]="arm-linux-gnueabi-gcc"
+  ["riscv64"]="riscv64-linux-gnu-gcc"
+  ["mips"]="mips-linux-gnu-gcc"
+  ["mipsle"]="mipsel-linux-gnu-gcc"
+  ["mips64"]="mips64-linux-gnuabi64-gcc"
+  ["mips64le"]="mips64el-linux-gnuabi64-gcc"
+  ["ppc64le"]="powerpc64le-linux-gnu-gcc"
 )
 
-for arch in "${!compilers[@]}"; do
+for arch in "${!archs[@]}"; do
 (
-  compiler=${compilers[$arch]}
-  echo "Building for $arch using $compiler..."
-  CGO_ENABLED=1 GOARCH=$arch CC=$compiler go install -a -tags sqlite_omit_load_extension -ldflags="$LDFLAGS" ./...
+  compilers=${archs[$arch]}
+  for compiler in $compilers; do
+    echo "Building for $arch using $compiler..."
+    CGO_ENABLED=1 GOARCH=$arch CC=$compiler go install -a -tags sqlite_omit_load_extension -ldflags="$LDFLAGS" ./...
+
+    # Special case for musl-gcc, keep legacy naming.
+    if [ "$compiler" == "musl-gcc" ]; then
+      release=`echo rqlite-$VERSION-$kernel-$arch-musl | tr '[:upper:]' '[:lower:]'`
+    else
+      release=`echo rqlite-$VERSION-$kernel-$arch | tr '[:upper:]' '[:lower:]'`
+    fi
+
+    mkdir -p $release
+    if [ "$arch" == "amd64" ]; then
+      copy_binaries $release $GOPATH/bin
+    else
+      copy_binaries $release $GOPATH/bin/linux_$arch
+    fi
+
+    tarball=${release}.tar.gz
+    tar cfz $tarball $release
+    if [ $? -ne 0 ]; then
+	  echo "Failed to create $tarball"
+	  exit 1
+    fi
+  done
 )
 done
 
