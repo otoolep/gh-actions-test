@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"os"
 
@@ -25,8 +26,9 @@ var (
 )
 
 func main() {
-	os.Remove("./foo.db")
+	fmt.Println("Version:", Version, "Commit:", Commit, "Branch:", Branch, "Buildtime:", Buildtime)
 
+	os.Remove("./foo.db")
 	db, err := sql.Open("sqlite3", "./foo.db")
 	if err != nil {
 		log.Fatal(err)
