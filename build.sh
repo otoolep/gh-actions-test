@@ -40,7 +40,7 @@ buildtime=`date +%Y-%m-%dT%T%z`
 # Prepare linker flags
 STRIP_SYMBOLS="-w -s"
 STATIC="-extldflags=-static"
-LINKER_PKG_PATH=github.com/otoolep/gh-actions-test
+LINKER_PKG_PATH=github.com/otoolep/gh-actions-test/main
 LDFLAGS="$STATIC $STRIP_SYMBOLS -X $LINKER_PKG_PATH.Version=$VERSION -X $LINKER_PKG_PATH.Branch=$branch -X $LINKER_PKG_PATH.Commit=$commit -X $LINKER_PKG_PATH.Buildtime=$buildtime"
 
 declare -A archs

@@ -8,6 +8,22 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
+// These variables are populated via the Go linker.
+// Make sure the build process (linker flags) are updated, as well as go.mod.
+var (
+	// Version of rqlite.
+	Version = "1"
+
+	// Commit this code was built at.
+	Commit = "unknown"
+
+	// Branch the code was built from.
+	Branch = "unknown"
+
+	// Buildtime is the timestamp when the build took place.
+	Buildtime = "unknown"
+)
+
 func main() {
 	os.Remove("./foo.db")
 
