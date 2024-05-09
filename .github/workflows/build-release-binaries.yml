@@ -55,17 +55,3 @@ jobs:
               --data-binary @$tarball \
               "https://uploads.github.com/repos/otoolep/gh-actions-test/releases/${{ github.event.release.id }}/assets?name=$tarball"
           done
-
-      - name: Update Release notes
-        env:
-          RELEASE_NOTES: |
-            This is a long string
-            that spans multiple lines
-            and all newlines will be preserved
-        run: |
-          curl \
-            -X PATCH \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            -d "{\"body\": \"Release notes for $RELEASE_NOTES\"}" \
-            "https://api.github.com/repos/otoolep/gh-actions-test/releases/${{ github.event.release.id }}"
