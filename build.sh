@@ -27,7 +27,6 @@ if ! is_semver "$VERSION"; then
 fi
 
 # Get build parameters
-kernel=`uname -s`
 machine=`uname -m`
 if [ "$machine" == "x86_64" ]; then
     machine="amd64"
