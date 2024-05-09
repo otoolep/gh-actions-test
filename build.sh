@@ -27,7 +27,6 @@ if ! is_semver "$VERSION"; then
 fi
 
 # Get build parameters
-kernel=`uname -s`
 machine=`uname -m`
 if [ "$machine" == "x86_64" ]; then
     machine="amd64"
@@ -40,7 +39,7 @@ buildtime=`date +%Y-%m-%dT%T%z`
 # Prepare linker flags
 STRIP_SYMBOLS="-w -s"
 STATIC="-extldflags=-static"
-LINKER_PKG_PATH=src/github.com/otoolep/gh-actions-test/main
+LINKER_PKG_PATH=main
 LDFLAGS="$STATIC $STRIP_SYMBOLS -X $LINKER_PKG_PATH.Version=$VERSION -X $LINKER_PKG_PATH.Branch=$branch -X $LINKER_PKG_PATH.Commit=$commit -X $LINKER_PKG_PATH.Buildtime=$buildtime"
 
 declare -A archs
